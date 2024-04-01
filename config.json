@@ -1,6 +1,19 @@
 {
-    "title":"Blog Title",
-    "subTitle":"Blog description",
-    "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "GMEEK_VERSION":"last"
+    "title":"Meekdai",
+    "displayTitle":"eekdai",
+    "subTitle":"童话是一种生活态度，仅此而已。",
+    "homeUrl":"https://blog.meekdai.com",
+    "avatarUrl":"https://static.meekdai.com/avatar.svg",
+    "faviconUrl":"https://static.meekdai.com/favicon.svg",
+    "singlePage":["link","about"],
+    "email":"937605022@qq.com",
+    "startSite":"01/04/2024",
+    "filingNum":"浙ICP备20023628号",
+    "onePageListNum":15,
+    "commentLabelColor":"#006b75",
+    "yearColorList":["#bc4c00", "#0969da", "#1f883d", "#A333D0"],
+    "i18n":"CN",
+    "nightTheme":"dark_colorblind",
+    "bottomText":"❤️ 转载文章请注明出处，谢谢！❤️",
+    "GMEEK_VERSION":"main"
 }
