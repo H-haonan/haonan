@@ -9,7 +9,24 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="安装部署keepalived">
+<meta name="description" content="1. 安装部署keepalived（Master和Slave两机器同样操作）
+1）安装keepalived
+# yum -y install keepalived
+
+2）Master节点的keepalived.conf配置
+这里特别需要注意：
+一定要设置keepalived为非抢占模式，如果设置成抢占模式会在不断的切换主备时容易造成NFS数据丢失。">
+<meta property="og:title" content="安装部署keepalived">
+<meta property="og:description" content="1. 安装部署keepalived（Master和Slave两机器同样操作）
+1）安装keepalived
+# yum -y install keepalived
+
+2）Master节点的keepalived.conf配置
+这里特别需要注意：
+一定要设置keepalived为非抢占模式，如果设置成抢占模式会在不断的切换主备时容易造成NFS数据丢失。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://h-haonan.github.io/haonan//post/an-zhuang-bu-shu-keepalived.html">
+<meta property="og:image" content="https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true">
 <title>安装部署keepalived</title>
 
 
