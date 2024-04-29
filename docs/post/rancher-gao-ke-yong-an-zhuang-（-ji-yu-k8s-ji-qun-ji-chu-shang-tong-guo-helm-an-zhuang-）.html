@@ -99,7 +99,8 @@ deployment "rancher" successfully rolled out</p>
 执行 kubectl get svc -n cattle-system 获取rancher 对外暴露端口<br>
 然后随便访问一个 节点IP+":"" + rancher对外暴露的端口/dashboard/ 即可访问rancher的web界面</p>
 <p>五. 获取认证token<br>
-kubectl -n cattle-system exec $(kubectl -n cattle-system get pods -l app=rancher | grep '1/1' | head -1 | awk '{ print $1 }') -- reset-password</p></div>
+kubectl -n cattle-system exec $(kubectl -n cattle-system get pods -l app=rancher | grep '1/1' | head -1 | awk '{ print $1 }') -- reset-password</p>
+<p>详情可参照rancher官网：<a href="https://docs.rancher.cn/docs/rancher2/installation/install-rancher-on-k8s/_index/#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6" rel="nofollow">https://docs.rancher.cn/docs/rancher2/installation/install-rancher-on-k8s/_index/#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6</a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>

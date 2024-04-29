@@ -31,3 +31,5 @@ deployment "rancher" successfully rolled out
 
 五. 获取认证token
 kubectl -n cattle-system exec $(kubectl -n cattle-system get pods -l app=rancher | grep '1/1' | head -1 | awk '{ print $1 }') -- reset-password
+
+详情可参照rancher官网：https://docs.rancher.cn/docs/rancher2/installation/install-rancher-on-k8s/_index/#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6
