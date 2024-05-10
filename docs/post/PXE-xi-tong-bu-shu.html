@@ -89,28 +89,30 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 查看http服务器配置vim /etc/httpd/conf/httpd.conf<br>
 修改http服务器文件存放位置DocumentRoot "/usr/local/httpd/file"  服务器监听端口 Listen 8088<br>
 修改配置后重启http服务器并将所需要的yaml文件放入/usr/local/httpd/file路径下。<br>
-2、安装配置DHCP server</p>
-<h1>yum -y install dhcp</h1>
-<p>编辑配置文件，这里是很重要的。</p>
-<h1>vim /etc/dhcp/dhcpd.conf</h1>
-<p>实例：</p>
+2、安装配置DHCP server<br>
+yum -y install dhcp<br>
+编辑配置文件，这里是很重要的。<br>
+vim /etc/dhcp/dhcpd.conf<br>
+实例：</p>
 <p>ddns-update-style none;<br>
-subnet 172.16.200.0 netmask 255.255.255.0 {    //配置网段<br>
+subnet 172.16.200.0 netmask 255.255.255.0  //配置网段<br>
+{<br>
 range 172.16.200.201 172.16.200.240;          //配置地址池<br>
 option routers 172.16.200.1;                  //配置网关<br>
 default-lease-time 600;<br>
 max-lease-time 7200;<br>
 filename"ipxe.efi";                         //指定pxe引导程序的文件名<br>
-next-server 172.16.200.252;                   //指定tftp服务器的地址}</p>
-<h1>systemctl start dhcpd  #开启服务</h1>
-<h1>systemctl status dhcpd  #查看服务状态（running）</h1>
+next-server 172.16.200.252;                   //指定tftp服务器的地址<br>
+}</p>
+<p>systemctl start dhcpd  #开启服务<br>
+systemctl status dhcpd  #查看服务状态（running）</p>
 <p>3、安装配置TFTP server  //服务器通过TFTP（Trivial File Transfer Protocol，简单文件传输协议）提供引导镜像文件的下载.</p>
-<p>安装TFTP，然后编辑配置文件，开启开启服务，默认的数据目录/var/lib/tftpboot</p>
-<h1>yum -y install tftp-server xinetd   //安装tftp（tftp依赖于xinetd，所以也要安装xinetd）</h1>
-<p>允许外界访问tftp</p>
-<h1>sudo firewall-cmd --add-service=tftp</h1>
-<h1>vi /etc/xinetd.d/tftp</h1>
-<p>Service    tftp<br>
+<p>安装TFTP，然后编辑配置文件，开启开启服务，默认的数据目录/var/lib/tftpboot<br>
+yum -y install tftp-server xinetd   //安装tftp（tftp依赖于xinetd，所以也要安装xinetd）</p>
+<p>允许外界访问tftp<br>
+sudo firewall-cmd --add-service=tftp</p>
+<p>vi /etc/xinetd.d/tftp<br>
+Service    tftp<br>
 {<br>
 socket_type             = dgram<br>
 protocol                = udp<br>
@@ -122,20 +124,20 @@ disable                 =no   // #将disable=yes 修改为no,no表示开启TFTP�
 per_source              = 11<br>
 cps                     = 100 2<br>
 flags                   = IPv4<br>
-}</p>
-<h1>systemctl start xinetd</h1>
-<h1>systemctl start tftp</h1>
-<h1>systemctl status tftp 查看服务状态是否在运行</h1>
-<p>4、安装syslinux：  //用来提供pxe的引导程序</p>
-<h1>yum -y install syslinux</h1>
-<h1>rpm -ql syslinux | grep pxelinux   //查找pxe引导程序的位置</h1>
-<p>将pxelinux.0拷贝到tftpboot目录下</p>
-<h1>cp /usr/share/syslinux/pxelinux.0  /var/lib/tftpboot/</h1>
-<p>在/var/lib/tftpboot/ 中新建一个pxelinux.cfg目录</p>
-<h1>mkdir /var/lib/tftpboot/pxelinux.cfg</h1>
-<p>将talos系统的启动所需的文件复制到/var/lib/tftpboot/ 目录下（以下红色标注的2个文件）：</p>
-<h1>ls /var/lib/tftpboot/</h1>
-<p>ipxe.efi          （这是一个pxe引导文件）<br>
+}<br>
+systemctl start xinetd<br>
+systemctl start tftp<br>
+systemctl status tftp 查看服务状态是否在运行</p>
+<p>4、安装syslinux：  //用来提供pxe的引导程序<br>
+yum -y install syslinux<br>
+rpm -ql syslinux | grep pxelinux   //查找pxe引导程序的位置</p>
+<p>将pxelinux.0拷贝到tftpboot目录下<br>
+cp /usr/share/syslinux/pxelinux.0  /var/lib/tftpboot/<br>
+在/var/lib/tftpboot/ 中新建一个pxelinux.cfg目录<br>
+mkdir /var/lib/tftpboot/pxelinux.cfg</p>
+<p>将talos系统的启动所需的文件复制到/var/lib/tftpboot/ 目录下（以下红色标注的2个文件）：<br>
+ls /var/lib/tftpboot/<br>
+ipxe.efi          （这是一个pxe引导文件）<br>
 pxelinux.0        （这文件是为legcay启动，它是legcay的启动镜像）<br>
 pxelinux.cfg      （该文件夹下放的是启动菜单，手动创建）</p></div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
