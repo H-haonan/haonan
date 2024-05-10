@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Fri, 10 May 2024 06:37:31 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>helm转yaml方法</title><link>https://h-haonan.github.io/haonan//post/helm-zhuan-yaml-fang-fa.html</link><description>#1.首先需要一个http服务器，通过docker或者在centos上直接yum install 部署都可以&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Fri, 10 May 2024 06:40:49 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>Jenkins部署</title><link>https://h-haonan.github.io/haonan//post/Jenkins-bu-shu.html</link><description>Jenkins部署&#13;
+基于centos7环境，默认docker已经安装&#13;
+以docker方式部署jenkins&#13;
+启动安装&#13;
+1.启动docker，下载Jenkins镜像文件&#13;
+docker pull jenkins/jenkins&#13;
+ 2.创建Jenkins挂载目录并授权权限&#13;
+（我们在服务器上先创建一个jenkins工作目录 /var/jenkins_mount，赋予相应权限，稍后我们将jenkins容器目录挂载到这个目录上，这样我们就可以很方便地对容器内的配置文件进行修改。</description><guid isPermaLink="true">https://h-haonan.github.io/haonan//post/Jenkins-bu-shu.html</guid><pubDate>Fri, 10 May 2024 06:40:17 +0000</pubDate></item><item><title>helm转yaml方法</title><link>https://h-haonan.github.io/haonan//post/helm-zhuan-yaml-fang-fa.html</link><description>#1.首先需要一个http服务器，通过docker或者在centos上直接yum install 部署都可以&#13;
 docker run -d -p 8081:80 -v /var/www:/usr/local/apache2/htdocs httpd&#13;
 这个docker命令会创建并运行一个httpd容器,参数说明如下:&#13;
 - `-d`: 后台运行容器&#13;

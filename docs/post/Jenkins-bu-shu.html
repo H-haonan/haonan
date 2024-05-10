@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark_colorblind" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.net/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://static.meekdai.com/favicon.svg"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="Jenkins部署
+基于centos7环境，默认docker已经安装
+以docker方式部署jenkins
+启动安装
+1.启动docker，下载Jenkins镜像文件
+docker pull jenkins/jenkins
+ 2.创建Jenkins挂载目录并授权权限
+（我们在服务器上先创建一个jenkins工作目录 /var/jenkins_mount，赋予相应权限，稍后我们将jenkins容器目录挂载到这个目录上，这样我们就可以很方便地对容器内的配置文件进行修改。">
+<meta property="og:title" content="Jenkins部署">
+<meta property="og:description" content="Jenkins部署
+基于centos7环境，默认docker已经安装
+以docker方式部署jenkins
+启动安装
+1.启动docker，下载Jenkins镜像文件
+docker pull jenkins/jenkins
+ 2.创建Jenkins挂载目录并授权权限
+（我们在服务器上先创建一个jenkins工作目录 /var/jenkins_mount，赋予相应权限，稍后我们将jenkins容器目录挂载到这个目录上，这样我们就可以很方便地对容器内的配置文件进行修改。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://h-haonan.github.io/haonan//post/Jenkins-bu-shu.html">
+<meta property="og:image" content="https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true">
+<title>Jenkins部署</title>
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">Jenkins部署</h1>
+<div class="title-right">
+    <a href="https://h-haonan.github.io/haonan/" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/H-haonan/haonan/issues/8" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>Jenkins部署<br>
+基于centos7环境，默认docker已经安装<br>
+以docker方式部署jenkins<br>
+启动安装<br>
+1.启动docker，下载Jenkins镜像文件<br>
+docker pull jenkins/jenkins<br>
+ 2.创建Jenkins挂载目录并授权权限<br>
+（我们在服务器上先创建一个jenkins工作目录 /var/jenkins_mount，赋予相应权限，稍后我们将jenkins容器目录挂载到这个目录上，这样我们就可以很方便地对容器内的配置文件进行修改。 如果我们不这样做，那么如果需要修改容器配置文件，将会有点麻烦，因为虽然我们可以使用docker exec -it --user root 容器id /bin/bash 命令进入容器目录，但是连简单的 vi命令都不能使用）<br>
+mkdir -p /var/jenkins_mount<br>
+chmod 777 /var/jenkins_mount<br>
+3.创建并启动Jenkins容器<br>
+　　-d 后台运行镜像<br>
+　　-p 10240:8080 将镜像的8080端口映射到服务器的10240端口。<br>
+　　-p 10241:50000 将镜像的50000端口映射到服务器的10241端口<br>
+　　-v /var/jenkins_mount:/var/jenkins_mount /var/jenkins_home目录为容器jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。这里我们设置的就是上面我们创建的 /var/jenkins_mount目录<br>
+　　-v /etc/localtime:/etc/localtime让容器使用和服务器同样的时间设置。<br>
+　　--name myjenkins 给容器起一个别名<br>
+docker run -d -p 10240:8080 -p 10241:50000 -v /var/jenkins_mount:/var/jenkins_home -v /etc/localtime:/etc/localtime --name myjenkins jenkins/Jenkins<br>
+4.查看jenkins是否启动成功<br>
+docker ps –l<br>
+浏览器输入ip加端口号进入</p>
+<p>部署可参考<a href="https://www.cnblogs.com/xs233/p/15994703.htm" rel="nofollow">https://www.cnblogs.com/xs233/p/15994703.htm</a><br>
+Node安装<br>
+curl -sL <a href="https://rpm.nodesource.com/setup_14.x" rel="nofollow">https://rpm.nodesource.com/setup_14.x</a> | bash -<br>
+yum install -y nodejs<br>
+查看用node -v  npm –v<br>
+直接设置淘宝的源：npm config set registry <a href="http://registry.npm.taobao.org/" rel="nofollow">http://registry.npm.taobao.org/</a><br>
+安装vue<br>
+npm install -g @vue/cli<br>
+配置工作空间Manage nodes and clouds<br>
+在managejenkins/nodes下<br>
+加一个MainAgentNode<br>
+Number of executors=1<br>
+Remote root directory=/<br>
+Launch method=launch agent by connecting to the controller<br>
+保存<br>
+然后在部署的服务器上安装java11，低版本会出现不适配问题<br>
+安装java11<br>
+先查看系统有无自带java环境<br>
+java –version<br>
+查看java版本情况<br>
+yum list installed | grep java    或    rpm -qa | grep java<br>
+卸载自带jdk，以1.7为例（如有1.7和1.8则需要输入两次）<br>
+yum -y remove java-1.7.0-openjdk* <br>
+再次查看，是否卸载成功<br>
+java –version<br>
+两种安装方式，第一种（不建议）<br>
+查看yum库中的Java安装包，输入：yum -y list java* <br>
+输入安装（安装前看清库中是否有对应版本的jdk）：yum -y install java-11.0.8-openjdk* 。 <br>
+当结果显示为Complete！即安装完毕，无需后续操作，直接查看java -version是否成功。<br>
+第二种，手动安装<br>
+官网下载：<a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html" rel="nofollow">https://www.oracle.com/java/technologies/javase-jdk11-downloads.html</a><br>
+下载完上传至指定文件夹（比如：/usr/local)<br>
+tar -zxvf jdk-11.0.8_linux-x64_bin.tar.gz  <br>
+设置环境变量<br>
+ export JAVA_HOME=/usr/local/jdk-11.0.8<br>
+  export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar<br>
+  export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin<br>
+按esc，再输入":wq"保存退出<br>
+环境生效：source /etc/profile  <br>
+查看是否安装成功<br>
+java –version</p>
+<p>安装完Java后，找个目录在下面输入node提示的信息<br>
+例如<br>
+curl -sO <a href="http://172.16.102.15:8080/jnlpJars/agent.jar" rel="nofollow">http://172.16.102.15:8080/jnlpJars/agent.jar</a><br>
+java -jar agent.jar -jnlpUrl <a href="http://172.16.102.15:8080/manage/computer/MainAgentNode/jenkins-agent.jnlp%20-secret%20591900c6ef85b29fa8100a23e8c7adf11dc221d3d73b3722b05dc995a7bb7a1d%20-workDir%20%22/" rel="nofollow">http://172.16.102.15:8080/manage/computer/MainAgentNode/jenkins-agent.jnlp -secret 591900c6ef85b29fa8100a23e8c7adf11dc221d3d73b3722b05dc995a7bb7a1d -workDir "/</a>"<br>
+没有报错则安装完成<br>
+Go安装：略<br>
+Gitlab配置Webhook<br>
+Jenkins中 <a href="http://172.16.1.195:8080/job/backend/configure%E8%AE%BE%E7%BD%AEBuild" rel="nofollow">http://172.16.1.195:8080/job/backend/configure设置Build</a> Triggers-&gt;Authentication Token<br>
+Gitlab中 <a href="https://172.16.106.11/fengtianyang/namonitoring-clould/-/hooks" rel="nofollow">https://172.16.106.11/fengtianyang/namonitoring-clould/-/hooks</a> 添加URL<br>
+在jenkins里面<br>
+1.在managejenkins/credentials里面加使用者权限信息，账号密码就行，id会自动生成<br>
+在项目里面Source Code Management，选git,然后加url和用户，Branches to build选择*/develop，若有报错则在jenkins容器里面执行git config --global http.sslverify false<br>
+Configure Global Security配置，Security Realm=Jenkins’own user database,authorization=anyone can do anything,githooks俩选项都选，apitoken三个选项全选，sshserver=disable, Git Host Key Verification Configuration=no verification<br>
+2.Gitlab操作：设置webhooks,<br>
+网址=<a href="http://172.16.102.15:8080/job/front/build?token=fronted" rel="nofollow">http://172.16.102.15:8080/job/front/build?token=fronted</a><br>
+选推送事件和和并请求事件保存就行<br>
+3.项目里面Build Triggers，设置Authentication Token=fronted<br>
+若有403问题：在脚本中输入<br>
+hudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION = true<br>
+若时间不同步问题：脚本执行<br>
+System.setProperty('org.apache.commons.jelly.tags.fmt.timeZone', 'Asia/Shanghai')<br>
+SSH配置:<br>
+在managejenkins/configuresystem里面配置ssh remote hosts<br>
+Hostname=172.16.102.13<br>
+Port=22<br>
+加一个root用户<br>
+然后在项目里面Execute shell script on remote host using ssh<br>
+就能连到服务器里面了<br>
+前端脚本备份：<br>
+#!/bin/bash<br>
+npm config set registry <a href="https://registry.npm.taobao.org" rel="nofollow">https://registry.npm.taobao.org</a><br>
+npm config get registry<br>
+npm cache clean --force<br>
+npm install -g cnpm --registry=<a href="https://registry.npm.taobao.org" rel="nofollow">https://registry.npm.taobao.org</a><br>
+npm install<br>
+npm run build:prod<br>
+pwd<br>
+docker rmi 172.16.106.11:10080/mingyang/cncp-dashboard:v1.0.0<br>
+docker build -f Dockerfile -t 172.16.106.11:10080/mingyang/cncp-dashboard:v1.0.0 .<br>
+docker push 172.16.106.11:10080/mingyang/cncp-dashboard:v1.0.0</p>
+<p>cd /home/cncp<br>
+pwd<br>
+kubectl delete -f cncp-dashboard-deploy.yaml<br>
+kubectl create -f cncp-dashboard-deploy.yaml<br>
+后端脚本备份：<br>
+#!/bin/bash<br>
+go mod tidy<br>
+docker rmi 172.16.106.11:10080/mingyang/cncp-apiserver:1.0.0<br>
+docker rmi 172.16.106.11:10080/mingyang/cncp-controller-manager:1.0.0<br>
+docker build -f ./docker/cncp-apiserver/Dockerfile -t 172.16.106.11:10080/mingyang/cncp-apiserver:1.0.0 .<br>
+docker build -f ./docker/cncp-controller-manager/Dockerfile -t 172.16.106.11:10080/mingyang/cncp-controller-manager:1.0.0 .<br>
+docker push 172.16.106.11:10080/mingyang/cncp-apiserver:1.0.0<br>
+docker push 172.16.106.11:10080/mingyang/cncp-controller-manager:1.0.0</p></div>
+<div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https://h-haonan.github.io/haonan/"> 浩楠的运维笔记 </a>
+<p><a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备20023628号</a>
+<span id="runday"></span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if("01/04/2024"!=""){
+    var now=new Date();
+    var startSite=new Date("01/04/2024");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if("浙ICP备20023628号"!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek main https://github.com/Meekdai/Gmeek \n\n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","H-haonan/haonan");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+</script>
+
+
+
+</html>
