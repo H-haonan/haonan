@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Fri, 10 May 2024 07:17:29 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>talos修改节点地址方案</title><link>https://h-haonan.github.io/haonan//post/talos-xiu-gai-jie-dian-di-zhi-fang-an.html</link><description>一.先添加新节点地址ip&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Fri, 10 May 2024 07:18:05 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>talos修改节点地址方案</title><link>https://h-haonan.github.io/haonan//post/talos-xiu-gai-jie-dian-di-zhi-fang-an.html</link><description>一.先添加新节点地址ip&#13;
 talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户现场地址的ip和网关（每台都改）&#13;
-● addresses:&#13;
+  addresses:&#13;
    - 172.16.100.151/24  #之前集群地址&#13;
    - 2408:8631:c02:ffa0::151/64 #之前集群地址&#13;
   - 172.16.102.151/24 #需要添加客户现场地址&#13;
@@ -20,12 +20,12 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关&#13;
    network: ::/0 &#13;
 在cluster/etcd下添加俩配置&#13;
-● advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly&#13;
+  advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly&#13;
    - 172.16.102.0/24 #和客户现场保持一致&#13;
    listenSubnets:&#13;
    - 172.16.102.0/24 #和客户现场保持一致&#13;
 修改cluster/kubelet下nodeIP:&#13;
-● nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.&#13;
+   nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.&#13;
    validSubnets:&#13;
    - 172.16.102.0/24 #和客户现场保持一致&#13;
 修改完后保存退出，看通过客户现场的地址是否能连接集群并看pod状态是否都正常。</description><guid isPermaLink="true">https://h-haonan.github.io/haonan//post/talos-xiu-gai-jie-dian-di-zhi-fang-an.html</guid><pubDate>Fri, 10 May 2024 07:07:56 +0000</pubDate></item><item><title>私有镜像库搭建</title><link>https://h-haonan.github.io/haonan//post/si-you-jing-xiang-ku-da-jian.html</link><description>Talos系统部署所需的本地仓库搭建&#13;

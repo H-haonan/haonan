@@ -11,7 +11,7 @@
     </script>
 <meta name="description" content="一.先添加新节点地址ip
 talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户现场地址的ip和网关（每台都改）
-● addresses:
+  addresses:
    - 172.16.100.151/24  #之前集群地址
    - 2408:8631:c02:ffa0::151/64 #之前集群地址
   - 172.16.102.151/24 #需要添加客户现场地址
@@ -30,19 +30,19 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关
    network: ::/0 
 在cluster/etcd下添加俩配置
-● advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
+  advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
    - 172.16.102.0/24 #和客户现场保持一致
    listenSubnets:
    - 172.16.102.0/24 #和客户现场保持一致
 修改cluster/kubelet下nodeIP:
-● nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.
+   nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.
    validSubnets:
    - 172.16.102.0/24 #和客户现场保持一致
 修改完后保存退出，看通过客户现场的地址是否能连接集群并看pod状态是否都正常。">
 <meta property="og:title" content="talos修改节点地址方案">
 <meta property="og:description" content="一.先添加新节点地址ip
 talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户现场地址的ip和网关（每台都改）
-● addresses:
+  addresses:
    - 172.16.100.151/24  #之前集群地址
    - 2408:8631:c02:ffa0::151/64 #之前集群地址
   - 172.16.102.151/24 #需要添加客户现场地址
@@ -61,12 +61,12 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关
    network: ::/0 
 在cluster/etcd下添加俩配置
-● advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
+  advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
    - 172.16.102.0/24 #和客户现场保持一致
    listenSubnets:
    - 172.16.102.0/24 #和客户现场保持一致
 修改cluster/kubelet下nodeIP:
-● nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.
+   nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.
    validSubnets:
    - 172.16.102.0/24 #和客户现场保持一致
 修改完后保存退出，看通过客户现场的地址是否能连接集群并看pod状态是否都正常。">
@@ -130,7 +130,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="content">
 <div class="markdown-body" id="postBody"><p>一.先添加新节点地址ip<br>
 talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户现场地址的ip和网关（每台都改）<br>
-● addresses:</p>
+addresses:</p>
 <ul>
 <li>172.16.100.151/24  #之前集群地址</li>
 <li>2408:8631:c02:ffa0::151/64 #之前集群地址</li>
@@ -150,12 +150,12 @@ network:  0.0.0.0/0</li>
 <li>gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关<br>
 network: ::/0<br>
 在cluster/etcd下添加俩配置<br>
-● advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly</li>
+advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly</li>
 <li>172.16.102.0/24 #和客户现场保持一致<br>
 listenSubnets:</li>
 <li>172.16.102.0/24 #和客户现场保持一致<br>
 修改cluster/kubelet下nodeIP:<br>
-● nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.<br>
+nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.<br>
 validSubnets:</li>
 <li>172.16.102.0/24 #和客户现场保持一致<br>
 修改完后保存退出，看通过客户现场的地址是否能连接集群并看pod状态是否都正常。<br>
