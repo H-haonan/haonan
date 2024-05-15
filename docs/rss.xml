@@ -1,5 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Sat, 11 May 2024 08:24:55 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>centos版k8s集群遇到证书过期问题</title><link>https://h-haonan.github.io/haonan//post/centos-ban-k8s-ji-qun-yu-dao-zheng-shu-guo-qi-wen-ti.html</link><description>先看是几个节点的集群，需要在每个节点执行以下操作。</description><guid isPermaLink="true">https://h-haonan.github.io/haonan//post/centos-ban-k8s-ji-qun-yu-dao-zheng-shu-guo-qi-wen-ti.html</guid><pubDate>Sat, 11 May 2024 08:24:30 +0000</pubDate></item><item><title>talos修改节点地址方案</title><link>https://h-haonan.github.io/haonan//post/talos-xiu-gai-jie-dian-di-zhi-fang-an.html</link><description>一.先添加新节点地址ip&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Wed, 15 May 2024 11:00:23 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>talos启用sdb硬盘方法</title><link>https://h-haonan.github.io/haonan//post/talos-qi-yong-sdb-ying-pan-fang-fa.html</link><description>配置根据官方文档配置：&#13;
+machine:&#13;
+    disks:&#13;
+        - device: /dev/sdb # The name of the disk to use.&#13;
+          # A list of partitions to create on the disk.&#13;
+          partitions:&#13;
+            - mountpoint: /var/mnt/extra # Where to mount the partition.&#13;
+需要注意的是：&#13;
+sdb硬盘需要清空并格式化&#13;
+方法：&#13;
+https://www.system-rescue.org/Download/&#13;
+去上面链接选择一个下载ios镜像做系统盘。</description><guid isPermaLink="true">https://h-haonan.github.io/haonan//post/talos-qi-yong-sdb-ying-pan-fang-fa.html</guid><pubDate>Wed, 15 May 2024 10:59:59 +0000</pubDate></item><item><title>centos版k8s集群遇到证书过期问题</title><link>https://h-haonan.github.io/haonan//post/centos-ban-k8s-ji-qun-yu-dao-zheng-shu-guo-qi-wen-ti.html</link><description>先看是几个节点的集群，需要在每个节点执行以下操作。</description><guid isPermaLink="true">https://h-haonan.github.io/haonan//post/centos-ban-k8s-ji-qun-yu-dao-zheng-shu-guo-qi-wen-ti.html</guid><pubDate>Sat, 11 May 2024 08:24:30 +0000</pubDate></item><item><title>talos修改节点地址方案</title><link>https://h-haonan.github.io/haonan//post/talos-xiu-gai-jie-dian-di-zhi-fang-an.html</link><description>一.先添加新节点地址ip&#13;
 talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户现场地址的ip和网关（每台都改）&#13;
  ●addresses:&#13;
    - 172.16.100.151/24  #之前集群地址&#13;
