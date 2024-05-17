@@ -5,15 +5,7 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - 2408:8631:c02:ffa0::151/64 #之前集群地址
    - 172.16.102.151/24 #需要添加客户现场地址
    - 2408:8631:c02:ffa2::151/64 #需要添加客户现场地址
-   bond:
-   deviceSelectors:
-   - busPath: "0000:07:00.0"
-   - busPath: "0000:08:00.0"
-   miimon: 10
-   mode: active-backup
-   interface: bond-metallb
-   mtu: 1500
-   routes:
+
    - gateway: 172.16.102.1 #需要修改的客户现场网关
    network:  0.0.0.0/0
    - gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关
@@ -23,7 +15,7 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - 172.16.102.0/24 #和客户现场保持一致
    listenSubnets:
    - 172.16.102.0/24 #和客户现场保持一致
-修改cluster/kubelet下nodeIP:
+修改/machine/kubelet下nodeIP:
  ●nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.
    validSubnets:
    - 172.16.102.0/24 #和客户现场保持一致

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Wed, 15 May 2024 11:00:23 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>talos启用sdb硬盘方法</title><link>https://h-haonan.github.io/haonan//post/talos-qi-yong-sdb-ying-pan-fang-fa.html</link><description>配置根据官方文档配置：&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>浩楠的运维笔记</title><link>https://h-haonan.github.io/haonan/</link><description>用心甘情愿的态度，过随遇而安的生活</description><copyright>浩楠的运维笔记</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.com/H-haonan/H-haonan.github.io/blob/master/img/avatar.png?raw=true</url><title>avatar</title><link>https://h-haonan.github.io/haonan/</link></image><lastBuildDate>Fri, 17 May 2024 02:38:13 +0000</lastBuildDate><managingEditor>浩楠的运维笔记</managingEditor><ttl>60</ttl><webMaster>浩楠的运维笔记</webMaster><item><title>talos启用sdb硬盘方法</title><link>https://h-haonan.github.io/haonan//post/talos-qi-yong-sdb-ying-pan-fang-fa.html</link><description>配置根据官方文档配置：&#13;
 machine:&#13;
     disks:&#13;
         - device: /dev/sdb # The name of the disk to use.&#13;
@@ -17,15 +17,7 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - 2408:8631:c02:ffa0::151/64 #之前集群地址&#13;
    - 172.16.102.151/24 #需要添加客户现场地址&#13;
    - 2408:8631:c02:ffa2::151/64 #需要添加客户现场地址&#13;
-   bond:&#13;
-   deviceSelectors:&#13;
-   - busPath: "0000:07:00.0"&#13;
-   - busPath: "0000:08:00.0"&#13;
-   miimon: 10&#13;
-   mode: active-backup&#13;
-   interface: bond-metallb&#13;
-   mtu: 1500&#13;
-   routes:&#13;
+&#13;
    - gateway: 172.16.102.1 #需要修改的客户现场网关&#13;
    network:  0.0.0.0/0&#13;
    - gateway: 2408:8631:c02:ffa2::1  #需要修改的客户现场网关&#13;
@@ -35,7 +27,7 @@ talosctl edit mc 修改机器配置，在服务器接口地址那块加上客户
    - 172.16.102.0/24 #和客户现场保持一致&#13;
    listenSubnets:&#13;
    - 172.16.102.0/24 #和客户现场保持一致&#13;
-修改cluster/kubelet下nodeIP:&#13;
+修改/machine/kubelet下nodeIP:&#13;
  ●nodeIP# The validSubnets field configures the networks to pick kubelet node IP from.&#13;
    validSubnets:&#13;
    - 172.16.102.0/24 #和客户现场保持一致&#13;
