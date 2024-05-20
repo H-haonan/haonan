@@ -61,7 +61,7 @@ systemctl enable --now docker
 # curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 2.修改配置文件 /etc/docker/daemon.json
 改成如下配置即可(默认在最后有个逗号，去掉即可，如果没有，请忽略以下步骤)
-{"registry-mirrors": ["http://f1361db2.m.daocloud.io"]}
+{'registry-mirrors': ['http://f1361db2.m.daocloud.io']}
 3.重启docker
 systemctl restart docker
 
@@ -133,7 +133,7 @@ systemctl enable --now docker
 # curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 2.修改配置文件 /etc/docker/daemon.json
 改成如下配置即可(默认在最后有个逗号，去掉即可，如果没有，请忽略以下步骤)
-{"registry-mirrors": ["http://f1361db2.m.daocloud.io"]}
+{'registry-mirrors': ['http://f1361db2.m.daocloud.io']}
 3.重启docker
 systemctl restart docker
 
